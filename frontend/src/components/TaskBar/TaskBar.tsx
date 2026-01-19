@@ -6,14 +6,18 @@ interface TaskBarProps {
 }
 
 const TaskBar: React.FC<TaskBarProps> = ({ placeholder = "" }) => {
-    const [currentTime, setCurrentTime] = useState("");
+    const [currentTime, setCurrentTime] = useState(new Date());
 
-
+    //Todo: Add more accurate clock that updates in sync with system clock
     useEffect(() => {
-        const now = new Date();
-        setCurrentTime(now.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" }))
-    }, [])
+        const interval = setInterval(() => {
+            setCurrentTime(new Date());
+        }, 30_000);
 
+        return () => clearInterval(interval);
+    }, []);
+
+    const formattedTime = currentTime.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
 
     return (
         <div className={`${styles.taskBar} flex justify-between`}>
@@ -23,7 +27,7 @@ const TaskBar: React.FC<TaskBarProps> = ({ placeholder = "" }) => {
                 <li>File Explorer</li>
             </ul>
             <div className={`${styles.systemTray} flex justify-center items-center`}>
-                <span>{currentTime}</span>
+                <span>{formattedTime}</span>
             </div>
         </div>
     );
