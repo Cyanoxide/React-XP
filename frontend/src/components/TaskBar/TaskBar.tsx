@@ -49,7 +49,23 @@ const TaskBar = () => {
                 </li>
             </ul>
             <div className={`${styles.systemTray} flex justify-center items-center`}>
-                <span>{formattedTime}</span>
+                <ul className="flex">
+                    <li className="relative">
+                        <img src="/icon__info.png" width="14" height="14" className="cursor-pointer mr-2 min-w-[14px]"></img>
+                        <span className={`${styles.tooltip} absolute`} data-label="tooltip">
+                            <span className="flex mb-1.5">
+                                <img src="/icon__info.png" width="14" height="14" className="cursor-pointer mr-2 min-w-[14px]"></img>
+                                <h4>Windows XP React Edition</h4>
+                                <button className={styles.tooltipClose}><span>+</span></button>
+                            </span>
+                            <p className="text-left">Still a work in progress, but this is an semi-authentic recreation of Windows XP created using React.</p>
+                        </span>
+                    </li>
+                    <li>
+                        <img src="/icon__info.png" width="14" height="14" className="cursor-pointer mr-2 min-w-[14px]"></img>
+                    </li>
+                </ul>
+                <span className="whitespace-nowrap">{formattedTime}</span>
             </div>
         </div>
     );
