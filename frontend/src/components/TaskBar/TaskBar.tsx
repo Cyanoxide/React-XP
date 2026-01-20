@@ -1,21 +1,19 @@
-import React, { useState, useEffect } from "react";
+import { useContext } from "../../context/context";
+import React, { useEffect } from "react";
 import styles from "./TaskBar.module.scss";
 
-interface TaskBarProps {
-    placeholder?: string
-}
 
-const TaskBar: React.FC<TaskBarProps> = ({ placeholder = "" }) => {
-    const [currentTime, setCurrentTime] = useState(new Date());
+const TaskBar = () => {
+    const { currentTime, dispatch } = useContext();
 
     //Todo: Add more accurate clock that updates in sync with system clock
     useEffect(() => {
         const interval = setInterval(() => {
-            setCurrentTime(new Date());
+            dispatch({ type: "SET_CURRENT_TIME", payload: new Date() });
         }, 30_000);
 
         return () => clearInterval(interval);
-    }, []);
+    }, [dispatch]);
 
     const onClickHandler = (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
         const windowTabSelector = "[data-label=taskBarWindowTab]";
