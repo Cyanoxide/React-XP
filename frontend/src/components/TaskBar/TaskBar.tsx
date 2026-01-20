@@ -17,19 +17,33 @@ const TaskBar: React.FC<TaskBarProps> = ({ placeholder = "" }) => {
         return () => clearInterval(interval);
     }, []);
 
+    const onClickHandler = (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
+        const windowTabSelector = "[data-label=taskBarWindowTab]";
+        const windowTab = (event.target as HTMLElement).closest<HTMLElement>(windowTabSelector);
+        if (!windowTab) return;
+
+        const windowTabs = windowTab.parentElement?.querySelectorAll<HTMLElement>(windowTabSelector);
+
+        windowTabs?.forEach((tab) => {
+            tab.dataset.active = "false";
+        });
+
+        windowTab.dataset.active = (windowTab.dataset.active === "true") ? "false" : "true";
+    };
+
     const formattedTime = currentTime.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
 
     return (
         <div className={`${styles.taskBar} flex justify-between`}>
             <button className={`${styles.startButton}`}>Start</button>
             <ul className={`${styles.windows} flex items-center justify-start w-full`}>
-                <li data-active="true">
+                <li onClick={(e) => onClickHandler(e)} data-active="true" data-label="taskBarWindowTab">
                     <span className="w-full relative flex">
                         <img src="/icon__internet_explorer.png" width="14" height="14" className="mr-2 min-w-[14px]"></img>
                         <span className="absolute ml-7">Internet Explorer</span>
                     </span>
                 </li>
-                <li>
+                <li onClick={(e) => onClickHandler(e)} data-label="taskBarWindowTab">
                     <span className="w-full relative flex">
                         <img src="/icon__documents.png" width="14" height="14" className="mr-2 min-w-[14px]"></img>
                         <span className="absolute ml-7">My Documents</span>
