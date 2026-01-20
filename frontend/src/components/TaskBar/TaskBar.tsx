@@ -1,7 +1,7 @@
 import { useContext } from "../../context/context";
 import React, { useEffect } from "react";
 import styles from "./TaskBar.module.scss";
-
+import Tooltip from "../Tooltip/Tooltip";
 
 const TaskBar = () => {
     const { currentTime, dispatch } = useContext();
@@ -52,14 +52,7 @@ const TaskBar = () => {
                 <ul className="flex">
                     <li className="relative">
                         <img src="/icon__info.png" width="14" height="14" className="cursor-pointer mr-2 min-w-[14px]"></img>
-                        <span className={`${styles.tooltip} absolute`} data-label="tooltip">
-                            <span className="flex items-center mb-1.5">
-                                <img src="/icon__info.png" width="14" height="14" className="cursor-pointer mr-2 min-w-[14px]"></img>
-                                <h4>Windows XP React Edition</h4>
-                                <button className={styles.tooltipClose}><span>+</span></button>
-                            </span>
-                            <p className="text-left">Still a work in progress, but this is an semi-authentic recreation of Windows XP created using React.</p>
-                        </span>
+                        <Tooltip heading="Windows XP React Edition" content="Still a work in progress, but this is an semi-authentic recreation of Windows XP created using React." />
                     </li>
                     <li>
                         <img src="/icon__info.png" width="14" height="14" className="cursor-pointer mr-2 min-w-[14px]"></img>
