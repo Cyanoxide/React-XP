@@ -1,0 +1,1 @@
+export const defaultWallpaper: string = "/wallpaper__default.jpg";
