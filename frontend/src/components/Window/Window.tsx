@@ -1,11 +1,37 @@
 import styles from "./Window.module.scss";
+import { useState } from "react";
 
 const Window = () => {
+    const [windowPosition, setWindowPosition] = useState([5, 5]);
+    const [windowOffset, setWindowOffset] = useState([0, 0]);
+    const [windowPositionX, windowPositionY] = windowPosition;
+
+    const onTitleBarPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+        event.currentTarget.closest("[data-label=window]")?.setPointerCapture(event.pointerId);
+
+        const windowOffsetX = event.clientX - windowPositionX;
+        const windowOffsetY = event.clientY - windowPositionY;
+        setWindowOffset([windowOffsetX, windowOffsetY]);
+
+        const mouseMove = (event: MouseEvent) => {
+            setWindowPosition([event.clientX - windowOffset[0], event.clientY - windowOffset[1]]);
+            document.body.style.userSelect = "none";
+        }
+
+        const mouseUp = () => {
+            window.removeEventListener("mouseup", mouseUp);
+            window.removeEventListener("mousemove", mouseMove);
+            document.body.style.userSelect = "";
+        }
+
+        window.addEventListener("mousemove", mouseMove);
+        window.addEventListener("mouseup", mouseUp);
+    }
 
     return (
         <>
-            <div className={`${styles.window} relative`} data-label="window">
-                <div className={`${styles.windowHeader} flex justify-between`}>
+            <div className={`${styles.window} absolute`} data-label="window" style={{ left: windowPosition[0], top: windowPosition[1] }}>
+                <div className={`${styles.titleBar} flex justify-between`} onPointerDown={(e) => onTitleBarPointerDown(e)}>
                     <div className="flex items-center">
                         <img src="/icon__documents.png" width="14" height="14" className="mx-2 min-w-[14px]"></img>
                         <h3>My Documents</h3>
