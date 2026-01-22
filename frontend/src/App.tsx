@@ -9,7 +9,8 @@ function App() {
     <Provider>
       <Wallpaper />
       <TaskBar />
-      <Window />
+      <Window title="My Portfolio" icon="/icon__internet_explorer.png"><div></div></Window>
+      <Window title="Triple Triad React" icon="/icon__internet_explorer.png"><div></div></Window>
     </Provider>
   )
 }

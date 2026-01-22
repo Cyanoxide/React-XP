@@ -3,6 +3,7 @@
     padding: 0.35rem;
     border-radius: 0.9rem 0.9rem 0.1rem 0.1rem;
     overflow: hidden;
+    min-width: fit-content;
 
     .titleBar {
         background: #2D60E4;
@@ -16,6 +17,13 @@
         font-size: 1.1rem;
         padding-right: 0.3rem;
         height: 2.9rem;
+        white-space: nowrap;
+        gap: 1rem;
+
+        h3 {
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
 
         button {
             position: relative;
@@ -36,7 +44,7 @@
                 background: url("/spritesheet__window_ui.png");
                 background-size: 7rem 1.7rem;
                 position: absolute;
-                inset:0;
+                inset: 0;
             }
 
             &[data-button="minimize"]:after {

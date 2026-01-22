@@ -1,8 +1,16 @@
 import styles from "./Window.module.scss";
 import { useState } from "react";
+import type { ReactNode } from "react";
 
-const Window = () => {
+interface WindowProps {
+    icon: string;
+    title: string;
+    children: ReactNode;
+}
+
+const Window: React.FC<WindowProps> = ({ icon, title, children }) => {
     const [[windowPositionX, windowPositionY], setWindowPosition] = useState([5, 5]);
+    const [[windowWidth, windowHeight], setWindowSize] = useState([500, 350]);
 
     const onTitleBarPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
         const activeWindow = event.currentTarget.closest("[data-label=window]")?.getBoundingClientRect();
@@ -29,13 +37,93 @@ const Window = () => {
         window.addEventListener("mouseup", mouseUp);
     }
 
+    function getRegionPosition(position: number, size: number, edgePadding: number) {
+        if (position <= edgePadding) return "start";
+        if (position >= size - edgePadding) return "end";
+        return "center";
+    }
+
+    function getWindowClickLocation(event: React.PointerEvent<HTMLDivElement>, element: Element, edgePadding: number) {
+        const { left, top, width, height } = element.getBoundingClientRect();
+
+        const x = event.clientX - left;
+        const y = event.clientY - top;
+
+        let vertical = "";
+        let horizontal = "";
+
+        const horizontalPosition = getRegionPosition(x, width, edgePadding);
+        const verticalPosition = getRegionPosition(y, height, edgePadding);
+
+        if (verticalPosition === "start") vertical = "top";
+        else if (verticalPosition === "end") vertical = "bottom";
+
+        if (horizontalPosition === "start") horizontal = "left";
+        else if (horizontalPosition === "end") horizontal = "right";
+
+        let region = vertical;
+        if (horizontal) region = region ? `${region}-${horizontal}` : horizontal;
+
+        return region || "center";
+    }
+
+    const onWindowPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+        if (event.currentTarget !== event.target) return;
+
+        const activeWindow = event.currentTarget.closest("[data-label=window]");
+        const activeTitleBar = activeWindow?.querySelector("[data-label=titlebar]");
+        const activeTitleBarHeight = activeTitleBar?.getBoundingClientRect().height;
+        const taskBarHeight = document.querySelector("[data-label=taskbar]")?.getBoundingClientRect().height;
+        const WINDOW_PADDING = 5;
+        const MIN_WINDOW_WIDTH = 307;
+        const activeWindowRect = activeWindow?.getBoundingClientRect();
+
+        if (!activeWindow || !activeWindowRect || !taskBarHeight || !activeTitleBarHeight) return;
+
+        const activeWindowRegion = getWindowClickLocation(event, activeWindow, WINDOW_PADDING);
+
+        const mouseMove = (event: MouseEvent) => {
+            if (event.clientY - activeWindowRect.top <= activeTitleBarHeight + WINDOW_PADDING) return;
+            let width = windowWidth;
+            let height = windowHeight;
+            let x = windowPositionX;
+            let y = windowPositionY;
+
+            if (activeWindowRegion.includes("right")) {
+                width = event.clientX - activeWindowRect.left;
+            }
+
+            if (activeWindowRegion.includes("left")) {
+                width = Math.max((activeWindowRect.right - event.clientX), MIN_WINDOW_WIDTH);
+                x = activeWindowRect.right - width;
+            }
+
+            if (activeWindowRegion.includes("bottom")) {
+                height = event.clientY - activeWindowRect.top;
+            }
+
+            setWindowPosition([x, y]);
+            setWindowSize([width, height]);
+            document.body.style.userSelect = "none";
+        }
+
+        const mouseUp = () => {
+            window.removeEventListener("mouseup", mouseUp);
+            window.removeEventListener("mousemove", mouseMove);
+            document.body.style.userSelect = "";
+        }
+
+        window.addEventListener("mousemove", mouseMove);
+        window.addEventListener("mouseup", mouseUp);
+    }
+
     return (
         <>
-            <div className={`${styles.window} absolute`} data-label="window" style={{ left: windowPositionX, top: windowPositionY }}>
-                <div className={`${styles.titleBar} flex justify-between`} onPointerDown={(e) => onTitleBarPointerDown(e)}>
+            <div className={`${styles.window} absolute`} data-label="window" style={{ left: windowPositionX, top: windowPositionY, height: windowHeight + "px", width: windowWidth + "px" }} onPointerDown={(e) => onWindowPointerDown(e)}>
+                <div className={`${styles.titleBar} flex justify-between`} data-label="titlebar" onPointerDown={(e) => onTitleBarPointerDown(e)}>
                     <div className="flex items-center">
-                        <img src="/icon__documents.png" width="14" height="14" className="mx-2 min-w-[14px]"></img>
-                        <h3>My Documents</h3>
+                        <img src={icon} width="14" height="14" className="mx-2 min-w-[14px]"></img>
+                        <h3>{title}</h3>
                     </div>
                     <div className="flex">
                         <button data-button="minimize">Minimise</button>
@@ -43,7 +131,7 @@ const Window = () => {
                         <button data-button="close">Close</button>
                     </div>
                 </div>
-                <div className={`${styles.windowContent}`} style={{ height: 200 + "px", width: 500 + "px", background: "#fff" }}></div>
+                <div className={`${styles.windowContent}`} style={{ height: "calc(100% - 2.5rem)", width: "100%", background: "#fff" }}>{children}</div>
             </div>
         </>
     )
