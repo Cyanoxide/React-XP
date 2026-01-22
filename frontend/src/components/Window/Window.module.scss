@@ -34,7 +34,7 @@
             &:after {
                 content: "";
                 background: url("/spritesheet__window_ui.png");
-                background-size: 5.2rem 1.7rem;
+                background-size: 7rem 1.7rem;
                 position: absolute;
                 inset:0;
             }
@@ -54,8 +54,8 @@
 
                 &:after {
                     background: url("/spritesheet__window_ui.png");
-                    background-position-x: -3.55rem;
-                    background-size: 5.2rem 1.7rem;
+                    background-position-x: -5.35rem;
+                    background-size: 7rem 1.7rem;
                 }
             }
         }
