@@ -31,14 +31,8 @@ const Window: React.FC<WindowProps> = ({ icon, title, children }) => {
     useEffect(() => {
         if (!activeWindow.current) return;
         if (!isWindowMaximized) setIsMaximized(false);
+        activeWindow.current.dataset.maximized = isMaximized.toString();
 
-        if (isWindowMaximized) {
-            activeWindow.current.style.borderRadius = "0";
-            activeWindow.current.style.padding = "0";
-        } else {
-            activeWindow.current.style.removeProperty("border-radius");
-            activeWindow.current.style.removeProperty("padding");
-        }
     }, [isWindowMaximized, isMaximized, setIsMaximized]);
 
     const onTitleBarPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
@@ -78,15 +72,15 @@ const Window: React.FC<WindowProps> = ({ icon, title, children }) => {
 
         const WINDOW_PADDING = getWindowPadding(activeWindow.current);
         const MIN_WINDOW_WIDTH = getMinimumWindowSize(activeWindow.current);
+        const MIN_WINDOW_HEIGHT = activeTitleBarHeight + WINDOW_PADDING;
         const activeWindowRegion = getWindowClickRegion(event, activeWindow.current, WINDOW_PADDING);
         document.body.style.userSelect = "none";
 
         const onMouseMove = (event: MouseEvent) => {
-            if (event.clientY - activeWindowRect.top <= activeTitleBarHeight + WINDOW_PADDING) return;
             let width = windowWidth;
             let height = windowHeight;
             let x = windowPositionX;
-            const y = windowPositionY;
+            let y = windowPositionY;
 
             if (activeWindowRegion.includes("right")) {
                 width = event.clientX - activeWindowRect.left;
@@ -98,7 +92,12 @@ const Window: React.FC<WindowProps> = ({ icon, title, children }) => {
             }
 
             if (activeWindowRegion.includes("bottom")) {
-                height = event.clientY - activeWindowRect.top;
+                height = Math.max((event.clientY - activeWindowRect.top), MIN_WINDOW_HEIGHT);
+            }
+
+            if (activeWindowRegion.includes("top")) {
+                height = Math.max((activeWindowRect.bottom - event.clientY), MIN_WINDOW_HEIGHT);
+                y = activeWindowRect.bottom - height;
             }
 
             setWindowPosition([x, y]);

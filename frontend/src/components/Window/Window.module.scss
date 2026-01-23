@@ -64,8 +64,14 @@
                 background-position-x: 0;
             }
 
-            &[data-button="maximize"]:after {
-                background-position-x: -1.8rem;
+            &[data-button="maximize"] {
+                &:after {
+                    background-position-x: -1.8rem;
+                }
+
+                &[data-maximized="true"]:after {
+                    background-position-x: -3.66rem;
+                }
             }
 
             &[data-button="close"] {
