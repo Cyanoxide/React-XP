@@ -150,19 +150,21 @@ const Window: React.FC<WindowProps> = ({ icon, title, children }) => {
 
     return (
         <>
-            <div ref={activeWindow} className={`${styles.window} absolute`} data-label="window" style={{ left: windowPositionX, top: windowPositionY, height: windowHeight + "px", width: windowWidth + "px" }} onPointerDown={(e) => onWindowPointerDown(e)}>
-                <div ref={titleBar} className={`${styles.titleBar} flex justify-between`} data-label="titlebar" onPointerDown={(e) => onTitleBarPointerDown(e)}>
-                    <div className="flex items-center">
-                        <img src={icon} width="14" height="14" className="mx-2 min-w-[14px]"></img>
-                        <h3>{title}</h3>
+            <div ref={activeWindow} data-label="window" className={`${styles.window} absolute`} style={{ left: windowPositionX, top: windowPositionY, height: windowHeight + "px", width: windowWidth + "px" }} onPointerDown={(e) => onWindowPointerDown(e)}>
+                <div className="w-full h-full pointer-events-none">
+                    <div ref={titleBar} className={`${styles.titleBar} flex justify-between pointer-events-auto`} data-label="titlebar" onPointerDown={(e) => onTitleBarPointerDown(e)}>
+                        <div className="flex items-center">
+                            <img src={icon} width="14" height="14" className="mx-2 min-w-[14px]"></img>
+                            <h3>{title}</h3>
+                        </div>
+                        <div className="flex">
+                            <button onClick={(e) => onButtonClick(e)} data-button="minimize">Minimise</button>
+                            <button onClick={(e) => onButtonClick(e)} data-button="maximize" data-maximized={isMaximized}>Maximise</button>
+                            <button onClick={(e) => onButtonClick(e)} data-button="close">Close</button>
+                        </div>
                     </div>
-                    <div className="flex">
-                        <button onClick={(e) => onButtonClick(e)} data-button="minimize">Minimise</button>
-                        <button onClick={(e) => onButtonClick(e)} data-button="maximize">Maximise</button>
-                        <button onClick={(e) => onButtonClick(e)} data-button="close">Close</button>
-                    </div>
+                    <div className={`${styles.windowContent}`} style={{ height: "calc(100% - 2.5rem)", width: "100%", background: "#fff" }}>{children}</div>
                 </div>
-                <div className={`${styles.windowContent}`} style={{ height: "calc(100% - 2.5rem)", width: "100%", background: "#fff" }}>{children}</div>
             </div>
         </>
     )
