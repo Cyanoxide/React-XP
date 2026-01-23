@@ -74,14 +74,40 @@ const Window: React.FC<WindowProps> = ({ icon, title, children }) => {
         const activeTitleBar = activeWindow?.querySelector("[data-label=titlebar]");
         const activeTitleBarHeight = activeTitleBar?.getBoundingClientRect().height;
         const taskBarHeight = document.querySelector("[data-label=taskbar]")?.getBoundingClientRect().height;
-        const WINDOW_PADDING = 5;
-        const MIN_WINDOW_WIDTH = 307;
         const activeWindowRect = activeWindow?.getBoundingClientRect();
 
         if (!activeWindow || !activeWindowRect || !taskBarHeight || !activeTitleBarHeight) return;
 
-        const activeWindowRegion = getWindowClickLocation(event, activeWindow, WINDOW_PADDING);
+        const calculateWindowPadding = (window: Element) => {
+            const styles = getComputedStyle(window) || 0;
+            const paddingLeft = parseFloat(styles.paddingLeft) || 0;
+            const paddingRight = parseFloat(styles.paddingRight) || 0;
+            const gap = parseFloat(styles.gap) || 0;
 
+            return paddingLeft + gap + paddingRight;
+        }
+
+        const calculateMinimumWindowSize = (window: Element) => {
+            const titleBar = window?.querySelector("[data-label=titlebar]");
+            if (!titleBar) return 0;
+
+            const windowPadding = calculateWindowPadding(window);
+            const internalWhiteSpace = calculateWindowPadding(titleBar);
+            let minWidth = internalWhiteSpace;
+
+            titleBar?.childNodes.forEach((element) => {
+                if (element instanceof HTMLElement) {
+                    minWidth = minWidth + element.offsetWidth;
+                }
+            });
+
+            return minWidth + windowPadding;
+        }
+
+        const WINDOW_PADDING = calculateWindowPadding(activeWindow);
+        const MIN_WINDOW_WIDTH = calculateMinimumWindowSize(activeWindow);
+
+        const activeWindowRegion = getWindowClickLocation(event, activeWindow, WINDOW_PADDING);
         const mouseMove = (event: MouseEvent) => {
             if (event.clientY - activeWindowRect.top <= activeTitleBarHeight + WINDOW_PADDING) return;
             let width = windowWidth;
