@@ -21,7 +21,6 @@ const Window: React.FC<WindowProps> = ({ ...props }) => {
     const [[windowPositionX, windowPositionY], setWindowPosition] = useState([left, top]);
     const [[windowWidth, windowHeight], setWindowSize] = useState([width, height]);
     const [isMaximized, setIsMaximized] = useState(false);
-    const [isHidden, setIsHidden] = useState(false);
     const [unmaximizedValues, setUnmaximizedValues] = useState({ left: "", top: "", width: "", height: "" });
     const activeWindow = useRef<HTMLDivElement | null>(null);
     const titleBar = useRef<HTMLDivElement | null>(null);
