@@ -27,10 +27,7 @@ export const updateCurrentActiveWindow = (windowId: string, currentWindows: curr
     const updatedCurrentWindows = [...currentWindows];
     updatedCurrentWindows.map((currentWindow) => {
         currentWindow.active = (windowId === currentWindow.id) ? true : false;
-        console.log(currentWindow.id);
     });
-
-    
 
     return updatedCurrentWindows;
 }
