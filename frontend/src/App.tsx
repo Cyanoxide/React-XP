@@ -1,7 +1,7 @@
 import { Provider } from "./context/provider";
 import TaskBar from "./components/TaskBar/TaskBar";
 import Wallpaper from "./components/Wallpaper/Wallpaper";
-import Window from "./components/Window/Window";
+import WindowManagement from "./components/WindowManagement/WindowManagement";
 import './App.css';
 
 function App() {
@@ -9,8 +9,7 @@ function App() {
     <Provider>
       <Wallpaper />
       <TaskBar />
-      <Window title="My Portfolio" icon="/icon__internet_explorer.png"><div></div></Window>
-      <Window title="Triple Triad React" icon="/icon__internet_explorer.png"><div></div></Window>
+      <WindowManagement />
     </Provider>
   )
 }
