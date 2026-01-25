@@ -14,7 +14,7 @@ const THROTTLE_DELAY = 50;
 const taskBarHeight = document.querySelector("[data-label=taskbar]")?.getBoundingClientRect().height || 0;
 
 const Window: React.FC<WindowProps> = ({ ...props }) => {
-    const { icon, title, id, children, left = 5, top = 5, width = 500, height = 350, active = false, hidden = false } = props;
+    const { icon, title, id, children, left = 100, top = 50, width = 500, height = 350, active = false, hidden = false } = props;
     const { currentWindows, dispatch } = useContext();
 
     const [[windowPositionX, windowPositionY], setWindowPosition] = useState([left, top]);
