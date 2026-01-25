@@ -18,23 +18,5 @@ export const reducer = (state: State, action: Action): State => {
 export const initialState: State = {
     wallpaper: defaultWallpaper,
     currentTime: new Date(),
-    currentWindows: [
-        {
-            id: generateUniqueId(),
-            title: "My Documents",
-            icon: "/icon__documents.png",
-            content: <div></div>,
-        },
-        {
-            id: generateUniqueId(),
-            title: "Internet Explorer",
-            icon: "/icon__internet_explorer.png",
-            content: <div></div>,
-            width: 300,
-            height: 450,
-            top: 30,
-            left: 30,
-            active: true,
-        }
-    ]
+    currentWindows: [],
 };

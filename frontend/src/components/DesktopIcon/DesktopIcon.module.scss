@@ -1,13 +1,13 @@
 .desktopIcon {
-    width: 7rem;
-    height: 7rem;
+    width: 6.5rem;
     margin: 0.5rem;
     position: absolute;
     display: flex;
     flex-direction: column;
+    align-items: center;
 
     img {
-        width: 50%;
+        padding: 0 1rem;
         margin: 0.35rem auto;
         user-select: none;
     }
@@ -24,10 +24,9 @@
 
     &[data-selected="true"] {
         &>span {
-            mask-image: url("icon__documents--large.png");
             background: #4069bf;
             mask-position: center;
-            mask-size: 35px 35px;
+            mask-size: 31px 31px;
             mask-repeat: no-repeat;
 
             img {

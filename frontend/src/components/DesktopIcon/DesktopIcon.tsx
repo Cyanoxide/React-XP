@@ -9,10 +9,10 @@ type DesktopIconProps = Omit<currentWindow, "id"> & {
     iconLarge?: string;
 };
 
-const DesktopIcon: React.FC<DesktopIconProps> = ({ title, iconLarge, icon, content }) => {
+const DesktopIcon: React.FC<DesktopIconProps> = ({ title, iconLarge, icon, content, left = 5, top = 5 }) => {
     const { currentWindows, dispatch } = useContext();
     const [isSelected, setIsSelected] = useState(false);
-    const [position, setPosition] = useState<number[]>([]);
+    const [position, setPosition] = useState<number[]>([left, top]);
     const desktopIcon = useRef<HTMLDivElement | null>(null);
 
     const onPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
@@ -66,9 +66,11 @@ const DesktopIcon: React.FC<DesktopIconProps> = ({ title, iconLarge, icon, conte
         setIsSelected(false);
     }
 
+    const imageMask = (isSelected) ? `url("${iconLarge || icon}")` : "";
+
     return (
         <div ref={desktopIcon} className={styles.desktopIcon} data-selected={isSelected} onClick={onClickHandler} onPointerDown={(e) => onPointerDown(e)} onDoubleClick={onDoubleClickHandler} style={{ left: position[0], top: position[1] }}>
-            <span><img src={iconLarge || icon} width="50" height="50" draggable={false}/></span>
+            <span style={{ maskImage: imageMask}}><img src={iconLarge || icon} width="50" height="50" draggable={false} /></span>
             <h4>{title}</h4>
         </div>
     );
