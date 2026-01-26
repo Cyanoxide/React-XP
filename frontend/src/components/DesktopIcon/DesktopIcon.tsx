@@ -85,7 +85,7 @@ const DesktopIcon: React.FC<DesktopIconProps> = ({ title, iconLarge, icon, conte
     return (
         <div ref={desktopIcon} className={styles.desktopIcon} data-selected={isActive} onClick={onClickHandler} onPointerDown={(e) => onPointerDown(e)} onDoubleClick={onDoubleClickHandler} style={{ top: position.top, right: position.right, bottom: position.bottom, left: position.left }}>
             <span style={{ maskImage: imageMask }}><img src={iconLarge || icon} width="50" height="50" draggable={false} /></span>
-            <h4>{title}</h4>
+            <h4 className="text-center">{title}</h4>
         </div>
     );
 };
