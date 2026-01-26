@@ -2,9 +2,12 @@ import { useContext } from "../../context/context";
 import React, { useEffect, useState } from "react";
 import styles from "./TaskBar.module.scss";
 import Tooltip from "../Tooltip/Tooltip";
+import StartMenu from "../StartMenu/StartMenu";
 
 const TaskBar = () => {
     const { currentTime, currentWindows, dispatch } = useContext();
+    const [systemTrayIconDismissed, setSystemTrayIconDismissed] = useState(false);
+    const [isStartVisible, setIsStartVisible] = useState(false);
 
     //Todo: Add more accurate clock that updates in sync with system clock
     useEffect(() => {
@@ -34,7 +37,6 @@ const TaskBar = () => {
         dispatch({ type: "SET_CURRENT_WINDOWS", payload: updatedCurrentWindows });
     };
 
-    const [systemTrayIconDismissed, setSystemTrayIconDismissed] = useState(false);
     const systemTrayIconClickHandler = (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
         const systemTrayIcon = (event.target as HTMLElement).closest<HTMLElement>("[data-label=Tooltip]");
         if (!systemTrayIcon) return;
@@ -44,12 +46,17 @@ const TaskBar = () => {
 
         setSystemTrayIconDismissed(false);
     }
+    
+    const statButtonClickHandler = () => {
+        setIsStartVisible((isStartVisible) ? false : true);
+    }
 
     const formattedTime = currentTime.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
 
     return (
         <div className={`${styles.taskBar} flex justify-between`} data-label="taskbar">
-            <button className={`${styles.startButton}`}>Start</button>
+            <button className={`${styles.startButton}`} onClick={statButtonClickHandler} data-selected={isStartVisible}>Start</button>
+            {isStartVisible && <StartMenu/>}
             <ul className={`${styles.windows} flex items-center justify-start w-full`}>
                 {currentWindows.map((currentWindow, index) => (
                     <li key={index} onClick={(e) => windowTabClickHandler(e)} data-label="taskBarWindowTab" data-active={currentWindow.active} data-window-id={currentWindow.id}>
