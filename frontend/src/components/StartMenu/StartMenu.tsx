@@ -37,10 +37,10 @@ const StartMenu: React.FC<StartMenuProps> = ({ startButton }) => {
                     <div>
                         <ul className="flex flex-col p-3">
                             <li>
-                                <StartMenuItem title="Internet" subTitle="Internet Explorer" icon="/icon__internet_explorer--large.png" content="<div></div>" />
+                                <StartMenuItem title="Internet Explorer" subTitle="Internet" icon="/icon__internet_explorer--large.png" content="<div></div>" />
                             </li>
                             <li>
-                                <StartMenuItem title="E-mail" subTitle="Outlook Express" icon="/icon__outlook--large.png" content="<div></div>" />                            </li>
+                                <StartMenuItem title="Outlook Express" subTitle="E-mail" icon="/icon__outlook--large.png" content="<div></div>" />                            </li>
                         </ul>
                         <ul className="flex flex-col p-3">
                             <li>

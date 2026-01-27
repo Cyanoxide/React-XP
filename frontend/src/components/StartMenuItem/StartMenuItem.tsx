@@ -28,6 +28,7 @@ const StartMenuItem: React.FC<StartMenuItemProps> = ({ ...props }) => {
         const updatedCurrentWindows = [...currentWindows];
         updatedCurrentWindows.push(newWindow);
         dispatch({ type: "SET_CURRENT_WINDOWS", payload: updatedCurrentWindows });
+        dispatch({ type: "SET_IS_START_VISIBLE", payload: false });
     }
 
     return (
@@ -35,8 +36,8 @@ const StartMenuItem: React.FC<StartMenuItemProps> = ({ ...props }) => {
             {subTitle && <>
                 <img src={icon} className="mr-2" width={iconSize} height={iconSize} />
                 <span>
-                    <h5 className="font-bold">{title}</h5>
-                    <p>{subTitle}</p>
+                    <h5 className="font-bold">{subTitle}</h5>
+                    <p>{title}</p>
                 </span>
             </>}
             {!subTitle && <>
