@@ -1,13 +1,13 @@
 import { useContext } from "../../context/context";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styles from "./TaskBar.module.scss";
 import Tooltip from "../Tooltip/Tooltip";
 import StartMenu from "../StartMenu/StartMenu";
 
 const TaskBar = () => {
-    const { currentTime, currentWindows, dispatch } = useContext();
+    const { currentTime, currentWindows, isStartVisible, dispatch } = useContext();
     const [systemTrayIconDismissed, setSystemTrayIconDismissed] = useState(false);
-    const [isStartVisible, setIsStartVisible] = useState(false);
+    const startButton = useRef<HTMLButtonElement|null>(null);
 
     //Todo: Add more accurate clock that updates in sync with system clock
     useEffect(() => {
@@ -48,15 +48,15 @@ const TaskBar = () => {
     }
     
     const statButtonClickHandler = () => {
-        setIsStartVisible((isStartVisible) ? false : true);
+        dispatch({ type: "SET_IS_START_VISIBLE", payload: (isStartVisible) ? false : true});
     }
 
     const formattedTime = currentTime.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" });
 
     return (
         <div className={`${styles.taskBar} flex justify-between`} data-label="taskbar">
-            <button className={`${styles.startButton}`} onClick={statButtonClickHandler} data-selected={isStartVisible}>Start</button>
-            {isStartVisible && <StartMenu/>}
+            <button ref={startButton} className={`${styles.startButton}`} onClick={statButtonClickHandler} data-selected={isStartVisible}>Start</button>
+            {isStartVisible && <StartMenu startButton={startButton}/>}
             <ul className={`${styles.windows} flex items-center justify-start w-full`}>
                 {currentWindows.map((currentWindow, index) => (
                     <li key={index} onClick={(e) => windowTabClickHandler(e)} data-label="taskBarWindowTab" data-active={currentWindow.active} data-window-id={currentWindow.id}>

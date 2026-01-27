@@ -9,6 +9,8 @@ export const reducer = (state: State, action: Action): State => {
             return { ...state, currentTime: action.payload };
         case "SET_CURRENT_WINDOWS":
             return { ...state, currentWindows: action.payload };
+        case "SET_IS_START_VISIBLE":
+            return { ...state, isStartVisible: action.payload };
         default:
             return state;
     }
@@ -18,4 +20,5 @@ export const initialState: State = {
     wallpaper: defaultWallpaper,
     currentTime: new Date(),
     currentWindows: [],
+    isStartVisible: false,
 };

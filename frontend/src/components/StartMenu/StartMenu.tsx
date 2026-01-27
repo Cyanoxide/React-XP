@@ -1,12 +1,32 @@
 import styles from "./StartMenu.module.scss";
+import { useContext } from "../../context/context";
+import { useEffect, useRef } from "react";
 
-const StartMenu = () => {
-    const onClickHandler = () => {
+interface StartMenuProps {
+    startButton: React.RefObject<HTMLButtonElement|null>
+}
 
-    }
+const StartMenu: React.FC<StartMenuProps> = ({startButton}) => {
+    const { isStartVisible, dispatch } = useContext();
+    const startMenu = useRef<HTMLDivElement|null>(null);
+
+    useEffect(() => {
+        const onClick = (event: MouseEvent) => {
+            const target = (event.target as Node);
+            const startMenuRef = startMenu.current;
+            const startButtonRef = startButton.current;
+            if(!startButtonRef || !startMenuRef) return;
+
+            if (!startMenuRef.contains(target) && !startButtonRef.contains(target)) {
+                dispatch({ type: "SET_IS_START_VISIBLE", payload: false });
+                document.removeEventListener("click", onClick);
+            }
+        }
+        document.addEventListener("click", onClick);
+    }, [startButton, isStartVisible, dispatch]);
 
     return (
-        <div className={`${styles.startMenu} bg-[#3e75d8] absolute left-0 bottom-12 overflow-hidden`}>
+        <div ref={startMenu} className={`${styles.startMenu} bg-[#3e75d8] absolute left-0 bottom-12 overflow-hidden`}>
             <header className="flex items-center p-3">
                 <img src="/avatar__skateboard.png" className="mr-3" width="50" height="50" />
                 <h1>User</h1>
