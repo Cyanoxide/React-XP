@@ -1,6 +1,7 @@
 import styles from "./StartMenu.module.scss";
 import { useContext } from "../../context/context";
 import { useEffect, useRef } from "react";
+import StartMenuItem from "../StartMenuItem/StartMenuItem";
 
 interface StartMenuProps {
     startButton: React.RefObject<HTMLButtonElement | null>
@@ -36,48 +37,26 @@ const StartMenu: React.FC<StartMenuProps> = ({ startButton }) => {
                     <div>
                         <ul className="flex flex-col p-3">
                             <li>
-                                <button className="flex items-center p-2">
-                                    <img src="/icon__internet_explorer--large.png" className="mr-3" width="30" height="30" />
-                                    <span>
-                                        <h5 className="font-bold">Internet</h5>
-                                        <p>Internet Explorer</p>
-                                    </span>
-                                </button>
+                                <StartMenuItem title="Internet" subTitle="Internet Explorer" icon="/icon__internet_explorer--large.png" content="<div></div>" />
                             </li>
                             <li>
-                                <button className="flex items-center p-2">
-                                    <img src="/icon__outlook--large.png" className="mr-3" width="30" height="30" />
-                                    <span>
-                                        <h5 className="font-bold">E-mail</h5>
-                                        <p>Outlook Express</p>
-                                    </span>
-                                </button>
-                            </li>
+                                <StartMenuItem title="E-mail" subTitle="Outlook Express" icon="/icon__outlook--large.png" content="<div></div>" />                            </li>
                         </ul>
                         <ul className="flex flex-col p-3">
                             <li>
-                                <button className="flex p-1 items-center">
-                                    <img src="/icon__messenger--large.png" className="mr-3" width="30" height="30" />
-                                    <h5>Windows Messenger</h5>
-                                </button>
+                                <StartMenuItem title="Windows Messenger" icon="/icon__messenger--large.png" iconSize={30} content="<div></div>" />
                             </li>
                             <li>
-                                <button className="flex p-1 items-center">
-                                    <img src="/icon__msn--large.png" className="mr-3" width="30" height="30" />
-                                    <h5>MSN</h5>
-                                </button>
+                                <StartMenuItem title="MSN" icon="/icon__msn--large.png" iconSize={30} content="<div></div>" />
                             </li>
                             <li>
-                                <button className="flex p-1 items-center">
-                                    <img src="/icon__media_player--large.png" className="mr-3" width="30" height="30" />
-                                    <h5>Windows Media Player</h5>
-                                </button>
+                                <StartMenuItem title="Windows Media Player" icon="/icon__media_player--large.png" iconSize={30} content="<div></div>" />
                             </li>
                         </ul>
                     </div>
                     <div>
                         <div className="p-2">
-                            <button className="flex items-center justify-center gap-2 p-2">
+                            <button className="flex items-center justify-center gap-2 p-1">
                                 <h5 className="font-bold">All Programs</h5>
                                 <img src="/icon__green_arrow--large.png" className="mr-3" width="20" height="20" />
                             </button>
@@ -87,70 +66,41 @@ const StartMenu: React.FC<StartMenuProps> = ({ startButton }) => {
                 <section className="bg-[#d6e4f8] text-[#112366]">
                     <ul className="font-bold p-2">
                         <li>
-                            <button className="flex p-1 items-center">
-                                <img src="/icon__documents--large.png" className="mr-2" width="22" height="22" />
-                                <h5>My Documents</h5>
-                            </button>
+                            <StartMenuItem title="My Documents" icon="/icon__documents--large.png" content="<div></div>" />
                         </li>
                         <li>
-                            <button className="flex p-1 items-center">
-                                <img src="/icon__recent_documents--large.png" className="mr-2" width="22" height="22" />
-                                <h5>My Recent Documents</h5>
-                            </button>
+                            <StartMenuItem title="My Recent Documents" icon="/icon__recent_documents--large.png" content="<div></div>" />
                         </li>
                         <li>
-                            <button className="flex p-1 items-center">
-                                <img src="/icon__pictures--large.png" className="mr-2" width="22" height="22" />
-                                <h5>My Pictures</h5>
-                            </button>
+                            <StartMenuItem title="My Pictures" icon="/icon__pictures--large.png" content="<div></div>" />
                         </li>
                         <li>
-                            <button className="flex p-1 items-center">
-                                <img src="/icon__music--large.png" className="mr-2" width="22" height="22" />
-                                <h5>My Music</h5>
-                            </button>
+                            <StartMenuItem title="My Music" icon="/icon__music--large.png" content="<div></div>" />
                         </li>
                         <li>
-                            <button className="flex p-1 items-center">
-                                <img src="/icon__computer--large.png" className="mr-2" width="22" height="22" />
-                                <h5>My Computer</h5>
-                            </button>
+                            <StartMenuItem title="My Computer" icon="/icon__computer--large.png" content="<div></div>" />
                         </li>
                     </ul>
                     <ul className="p-2">
-                        <li className="flex p-1 items-center">
-                            <img src="/icon__control_panel--large.png" className="mr-2" width="22" height="22" />
-                            <h5>Control Panel</h5>
+                        <li>
+                            <StartMenuItem title="Control Panel" icon="/icon__control_panel--large.png" content="<div></div>" />
                         </li>
                         <li>
-                            <button className="flex p-1 items-center">
-                                <img src="/icon__default_programs--large.png" className="mr-2" width="22" height="22" />
-                                <h5>Set Program Access and Defaults</h5>
-                            </button>
+                            <StartMenuItem title="Set Program Access and Defaults" icon="/icon__default_programs--large.png" content="<div></div>" />
                         </li>
                         <li>
-                            <button className="flex p-1 items-center">
-                                <img src="/icon__printers_faxes--large.png" className="mr-2" width="22" height="22" />
-                                <h5>Printers and Faxes</h5>
-                            </button>
+                            <StartMenuItem title="Printers and Faxes" icon="/icon__printers_faxes--large.png" content="<div></div>" />
                         </li>
                     </ul>
                     <ul className="p-2">
-                        <li className="flex p-1 items-center">
-                            <img src="/icon__help--large.png" className="mr-2" width="22" height="22" />
-                            <h5>Help and Support</h5>
+                        <li>
+                            <StartMenuItem title="Help and Support" icon="/icon__recent_documents--large.png" content="<div></div>" />
                         </li>
                         <li>
-                            <button className="flex p-1 items-center">
-                                <img src="/icon__search--large.png" className="mr-2" width="22" height="22" />
-                                <h5>Search</h5>
-                            </button>
+                            <StartMenuItem title="Search" icon="/icon__search--large.png" content="<div></div>" />
                         </li>
                         <li>
-                            <button className="flex p-1 items-center">
-                                <img src="/icon__run--large.png" className="mr-2" width="22" height="22" />
-                                <h5>Run...</h5>
-                            </button>
+                            <StartMenuItem title="Run..." icon="/icon__run--large.png" content="<div></div>" />
                         </li>
                     </ul>
                 </section>

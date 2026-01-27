@@ -3,7 +3,6 @@
     max-width: 100%;
     border-radius: 0.75rem 0.75rem 0 0;
     box-shadow: 2px 2px 5px #0006;
-    z-index: 1;
 
     img {
         flex-shrink: 0;
@@ -25,7 +24,8 @@
         }
 
         h1 {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
+            font-weight: 600;
             text-shadow: 0.1rem 0.1rem 0.2rem #16316b;
         }
     }
