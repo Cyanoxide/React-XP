@@ -3,19 +3,19 @@ import { useContext } from "../../context/context";
 import { useEffect, useRef } from "react";
 
 interface StartMenuProps {
-    startButton: React.RefObject<HTMLButtonElement|null>
+    startButton: React.RefObject<HTMLButtonElement | null>
 }
 
-const StartMenu: React.FC<StartMenuProps> = ({startButton}) => {
+const StartMenu: React.FC<StartMenuProps> = ({ startButton }) => {
     const { isStartVisible, dispatch } = useContext();
-    const startMenu = useRef<HTMLDivElement|null>(null);
+    const startMenu = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
         const onClick = (event: MouseEvent) => {
             const target = (event.target as Node);
             const startMenuRef = startMenu.current;
             const startButtonRef = startButton.current;
-            if(!startButtonRef || !startMenuRef) return;
+            if (!startButtonRef || !startMenuRef) return;
 
             if (!startMenuRef.contains(target) && !startButtonRef.contains(target)) {
                 dispatch({ type: "SET_IS_START_VISIBLE", payload: false });
@@ -66,9 +66,11 @@ const StartMenu: React.FC<StartMenuProps> = ({startButton}) => {
                         </ul>
                     </div>
                     <div>
-                        <div className="flex items-center justify-center gap-2 p-3">
-                            <h5 className="font-bold">All Programs</h5>
-                            <img src="/icon__green_arrow--large.png" className="mr-3" width="20" height="20" />
+                        <div className="p-2">
+                            <span className="flex items-center justify-center gap-2 p-2">
+                                <h5 className="font-bold">All Programs</h5>
+                                <img src="/icon__green_arrow--large.png" className="mr-3" width="20" height="20" />
+                            </span>
                         </div>
                     </div>
                 </section>

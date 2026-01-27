@@ -3,6 +3,7 @@
     max-width: 100%;
     border-radius: 0.75rem 0.75rem 0 0;
     box-shadow: 2px 2px 5px #0006;
+    z-index: 1;
 
     img {
         flex-shrink: 0;
@@ -69,6 +70,14 @@
         &>div>div {
             border-top: 0.1rem solid;
             border-image: linear-gradient(to right, transparent, #deded7, transparent) 1;
+
+            &>span {
+                &:hover {
+                    background: #4069bf;
+                    color: #fff;
+                    cursor: pointer;
+                }
+            }
         }
 
         &>ul:not(:last-child) {
