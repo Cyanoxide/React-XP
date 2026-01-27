@@ -47,19 +47,33 @@
     section {
         line-height: 1.2rem;
 
-        li:hover {
-            background: #4069bf;
-            color: #fff;
-            cursor: pointer;
-        }
-
         &:first-of-type {
             border-left: 0.2rem solid #3c65ca;
+            width: 50%;
+            width: -webkit-fill-available;
+            width: -moz-available;
+
+            @media (min-width: 300px) {
+                width: 50%;
+            }
         }
 
         &:last-of-type {
             border-left: 0.1rem solid #abc6ed;
             border-right: 0.2rem solid #3c65ca;
+
+            @media (min-width: 30rem) {
+                display: inline;
+                width: 50%;
+            }
+
+            h5 {
+                display: none;
+
+                @media (min-width: 300px) {
+                    display: inline;
+                }
+            }
         }
 
         &>div>*:not(:last-child) {
@@ -70,14 +84,6 @@
         &>div>div {
             border-top: 0.1rem solid;
             border-image: linear-gradient(to right, transparent, #deded7, transparent) 1;
-
-            &>span {
-                &:hover {
-                    background: #4069bf;
-                    color: #fff;
-                    cursor: pointer;
-                }
-            }
         }
 
         &>ul:not(:last-child) {
@@ -90,11 +96,16 @@
         background: linear-gradient(180deg, #4980d9 1%, #306fcc 100%);
         border-top: 0.15rem solid #416cd6;
         box-shadow: inset 0.2rem 0 0.8rem #3960c3, inset -0.2rem 0 0.8rem #3960c3;
+    }
 
-        li:hover {
+    button {
+        width: 100%;
+
+        &:hover {
             background: #4069bf;
             color: #fff;
             cursor: pointer;
+
         }
     }
 }
