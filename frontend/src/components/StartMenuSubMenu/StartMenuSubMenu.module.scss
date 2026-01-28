@@ -1,0 +1,78 @@
+.StartMenuSubMenu {
+    position: absolute;
+    left: 100%;
+    bottom: -0.1rem;
+    background: #fff;
+    border: 1px solid #8cb8f9;
+    min-height: 2.55rem;
+    padding-left: 0.3rem;
+    box-shadow: 0.2rem 0.2rem 0.4rem #00000033;
+    width: 18.5rem;
+
+    &[data-sub-menu="allPrograms"] {
+        left: 75%;
+        bottom: 0.5rem;
+        width: 21rem;
+    }
+
+    &[data-active="false"] {
+        display: none;
+    }
+
+    &.emptySubMenu {
+        width: 11rem;
+    }
+
+    &:before {
+        content: "";
+        background: #467cdd;
+        height: 100%;
+        width: 0.3rem;
+        position: absolute;
+        left: 0;
+    }
+
+    hr {
+        height: 0;
+        border-top: none;
+        border-bottom: 0.1rem solid;
+        border-image: linear-gradient(to right, transparent, #deded7, transparent 90%) 1;
+    }
+
+    &>div>div {
+        display: none;
+        align-items: center;
+    }
+
+    &>div:hover>div {
+        display: flex;
+        color: #000;
+    }
+
+    &>div:hover:not(.emptySubMenu) {
+        background: #4069bf;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    &>div>div>div>div {
+        width: 14rem;
+    }
+
+    .subMenuItem {
+        text-indent: 2rem;
+        width: 100%;
+    }
+
+    [data-has-sub-Menu="true"]:after {
+        content: "►";
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%) scaleX(60%);
+    }
+
+    button {
+        padding-right: 1.5rem;
+    }
+}

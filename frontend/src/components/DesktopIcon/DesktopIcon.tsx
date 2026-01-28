@@ -14,9 +14,8 @@ type AbsoluteObject = {
 
 type DesktopIconProps = AbsoluteObject & currentWindow & {
     iconLarge?: string;
-    selectedId: string;
-    id: string;
-    setSelectedId: (value: string) => void;
+    selectedId: string | number;
+    setSelectedId: (value: string | number) => void;
 };
 
 const DesktopIcon: React.FC<DesktopIconProps> = ({ title, iconLarge, icon, content, top = undefined, right = undefined, bottom = undefined, left = undefined, id, selectedId, setSelectedId }) => {

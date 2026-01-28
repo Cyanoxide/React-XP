@@ -1,16 +1,23 @@
 import type { ReactNode } from "react";
 
+export interface startMenuItem {
+    title: string;
+    icon: string;
+    content: ReactNode | string;
+    hasSubMenu?: boolean;
+}
+
 export interface currentWindow {
-    title: string,
-    icon: string,
-    content: ReactNode,
-    id: string,
-    width?: number,
-    height?: number,
-    top?: number,
-    left?: number,
-    active?: boolean,
-    hidden?: boolean,
+    title: string;
+    icon: string;
+    content: ReactNode;
+    id: string | number;
+    width?: number;
+    height?: number;
+    top?: number;
+    left?: number;
+    active?: boolean;
+    hidden?: boolean;
 }
 export type currentWindows = currentWindow[];
 

@@ -1,0 +1,56 @@
+import styles from "./StartMenuSubMenu.module.scss";
+import type { ReactNode } from "react";
+import subMenusJSON from "../../data/subMenus.json";
+
+interface StartMenuSubMenuProps {
+    data?: SubMenuData;
+    parentRef?: React.RefObject<HTMLDivElement | null>;
+}
+
+interface SubMenuData {
+    id: string;
+    featured: SubMenuItem[];
+    contents: SubMenuItem[];
+}
+
+interface SubMenuItem {
+    id: string;
+    title: string;
+    icon: string;
+    content?: ReactNode | string;
+    subMenu?: string;
+}
+
+const subMenus = (subMenusJSON as unknown as { [key: string]: SubMenuData });
+
+const template = (item: SubMenuItem) => {
+    const { id, title, icon, subMenu = "" } = { ...item };
+    return (
+        <div key={id} className={`${styles.subMenuItem} relative`} data-has-sub-Menu={!!subMenu}>
+            <button className="flex items-center p-1.5 relative">
+                <img src={icon} className="mr-1.5" width="16" height="16" />
+                <span>{title}</span>
+            </button>
+            {subMenu && <StartMenuSubMenu data={subMenus[subMenu]} />}
+        </div>
+    )
+}
+const emptySubMenu = <div className={`${styles.emptySubMenu} flex items-center`}>(Empty)</div>
+
+
+const StartMenuSubMenu: React.FC<StartMenuSubMenuProps> = ({ data }) => {
+    const { id, featured, contents } = { ...data };
+
+    const isEmpty = !contents && !featured;
+
+    return (
+        <div className={`${styles.StartMenuSubMenu} ${isEmpty && styles.emptySubMenu} items-center`} data-sub-menu={id}>
+            {featured && featured.map((item) => template(item))}
+            {featured && contents && <hr/>}
+            {contents && contents.map((item) => template(item))}
+            {isEmpty && emptySubMenu}
+        </div>
+    );
+};
+
+export default StartMenuSubMenu;

@@ -1,7 +1,9 @@
 import styles from "./StartMenu.module.scss";
 import { useContext } from "../../context/context";
-import { useEffect, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import StartMenuItem from "../StartMenuItem/StartMenuItem";
+import StartMenuSubMenu from "../StartMenuSubMenu/StartMenuSubMenu";
+import subMenus from "../../data/subMenus.json"
 
 interface StartMenuProps {
     startButton: React.RefObject<HTMLButtonElement | null>
@@ -10,6 +12,7 @@ interface StartMenuProps {
 const StartMenu: React.FC<StartMenuProps> = ({ startButton }) => {
     const { isStartVisible, dispatch } = useContext();
     const startMenu = useRef<HTMLDivElement | null>(null);
+    const allPrograms = useRef<HTMLDivElement | null>(null);
 
     useEffect(() => {
         const onClick = (event: MouseEvent) => {
@@ -26,8 +29,27 @@ const StartMenu: React.FC<StartMenuProps> = ({ startButton }) => {
         document.addEventListener("click", onClick);
     }, [startButton, isStartVisible, dispatch]);
 
+    const [isAllProgramsOpen, setIsAllProgramsOpen] = useState(false);
+    const allProgramsClickHandler = () => {
+        setIsAllProgramsOpen(true);
+
+
+
+        const onSecondClick = (event: MouseEvent) => {
+            const target = (event.target as Node);
+            const allProgramsRef = allPrograms.current;
+
+            if (!allProgramsRef?.contains(target)) {
+                document.removeEventListener("click", onSecondClick);
+                setIsAllProgramsOpen(false);
+            }
+        }
+
+        document.addEventListener("click", onSecondClick);
+    }
+
     return (
-        <div ref={startMenu} className={`${styles.startMenu} bg-[#3e75d8] absolute left-0 bottom-12 overflow-hidden`}>
+        <div ref={startMenu} className={`${styles.startMenu} bg-[#3e75d8] absolute left-0 bottom-12`}>
             <header className="flex items-center p-3">
                 <img src="/avatar__skateboard.png" className="mr-3" width="50" height="50" />
                 <h1>User</h1>
@@ -37,70 +59,71 @@ const StartMenu: React.FC<StartMenuProps> = ({ startButton }) => {
                     <div>
                         <ul className="flex flex-col p-3">
                             <li>
-                                <StartMenuItem title="Internet Explorer" subTitle="Internet" icon="/icon__internet_explorer--large.png" content="<div></div>" />
+                                <StartMenuItem title="Internet Explorer" subTitle="Internet" icon="/icon__internet_explorer--large.png" content={<div></div>} />
                             </li>
                             <li>
-                                <StartMenuItem title="Outlook Express" subTitle="E-mail" icon="/icon__outlook--large.png" content="<div></div>" />                            </li>
+                                <StartMenuItem title="Outlook Express" subTitle="E-mail" icon="/icon__outlook--large.png" content={<div></div>} />                            </li>
                         </ul>
                         <ul className="flex flex-col p-3">
                             <li>
-                                <StartMenuItem title="Windows Messenger" icon="/icon__messenger--large.png" iconSize={30} content="<div></div>" />
+                                <StartMenuItem title="Windows Messenger" icon="/icon__messenger--large.png" iconSize={30} content={<div></div>} />
                             </li>
                             <li>
-                                <StartMenuItem title="MSN" icon="/icon__msn--large.png" iconSize={30} content="<div></div>" />
+                                <StartMenuItem title="MSN" icon="/icon__msn--large.png" iconSize={30} content={<div></div>} />
                             </li>
                             <li>
-                                <StartMenuItem title="Windows Media Player" icon="/icon__media_player--large.png" iconSize={30} content="<div></div>" />
+                                <StartMenuItem title="Windows Media Player" icon="/icon__media_player--large.png" iconSize={30} content={<div></div>} />
                             </li>
                         </ul>
                     </div>
                     <div>
-                        <div className="p-2">
-                            <button className="flex items-center justify-center gap-2 p-1">
+                        <div ref={allPrograms} className={`${styles.allPrograms} p-2 relative`}>
+                            <button className="flex items-center justify-center gap-2 p-1" onMouseOver={allProgramsClickHandler}>
                                 <h5 className="font-bold">All Programs</h5>
                                 <img src="/icon__green_arrow--large.png" className="mr-3" width="20" height="20" />
                             </button>
+                            {isAllProgramsOpen && <StartMenuSubMenu data={subMenus.allPrograms} />}
                         </div>
                     </div>
                 </section>
                 <section className="bg-[#d6e4f8] text-[#112366]">
                     <ul className="font-bold p-2">
                         <li>
-                            <StartMenuItem title="My Documents" icon="/icon__documents--large.png" content="<div></div>" />
+                            <StartMenuItem title="My Documents" icon="/icon__documents--large.png" content={<div></div>} />
                         </li>
                         <li>
-                            <StartMenuItem title="My Recent Documents" icon="/icon__recent_documents--large.png" content="<div></div>" />
+                            <StartMenuItem title="My Recent Documents" icon="/icon__recent_documents--large.png" content={<div></div>} />
                         </li>
                         <li>
-                            <StartMenuItem title="My Pictures" icon="/icon__pictures--large.png" content="<div></div>" />
+                            <StartMenuItem title="My Pictures" icon="/icon__pictures--large.png" content={<div></div>} />
                         </li>
                         <li>
-                            <StartMenuItem title="My Music" icon="/icon__music--large.png" content="<div></div>" />
+                            <StartMenuItem title="My Music" icon="/icon__music--large.png" content={<div></div>} />
                         </li>
                         <li>
-                            <StartMenuItem title="My Computer" icon="/icon__computer--large.png" content="<div></div>" />
-                        </li>
-                    </ul>
-                    <ul className="p-2">
-                        <li>
-                            <StartMenuItem title="Control Panel" icon="/icon__control_panel--large.png" content="<div></div>" />
-                        </li>
-                        <li>
-                            <StartMenuItem title="Set Program Access and Defaults" icon="/icon__default_programs--large.png" content="<div></div>" />
-                        </li>
-                        <li>
-                            <StartMenuItem title="Printers and Faxes" icon="/icon__printers_faxes--large.png" content="<div></div>" />
+                            <StartMenuItem title="My Computer" icon="/icon__computer--large.png" content={<div></div>} />
                         </li>
                     </ul>
                     <ul className="p-2">
                         <li>
-                            <StartMenuItem title="Help and Support" icon="/icon__recent_documents--large.png" content="<div></div>" />
+                            <StartMenuItem title="Control Panel" icon="/icon__control_panel--large.png" content={<div></div>} />
                         </li>
                         <li>
-                            <StartMenuItem title="Search" icon="/icon__search--large.png" content="<div></div>" />
+                            <StartMenuItem title="Set Program Access and Defaults" icon="/icon__default_programs--large.png" content={<div></div>} />
                         </li>
                         <li>
-                            <StartMenuItem title="Run..." icon="/icon__run--large.png" content="<div></div>" />
+                            <StartMenuItem title="Printers and Faxes" icon="/icon__printers_faxes--large.png" content={<div></div>} />
+                        </li>
+                    </ul>
+                    <ul className="p-2">
+                        <li>
+                            <StartMenuItem title="Help and Support" icon="/icon__recent_documents--large.png" content={<div></div>} />
+                        </li>
+                        <li>
+                            <StartMenuItem title="Search" icon="/icon__search--large.png" content={<div></div>} />
+                        </li>
+                        <li>
+                            <StartMenuItem title="Run..." icon="/icon__run--large.png" content={<div></div>} />
                         </li>
                     </ul>
                 </section>
