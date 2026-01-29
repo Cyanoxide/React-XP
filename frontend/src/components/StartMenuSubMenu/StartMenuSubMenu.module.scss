@@ -11,9 +11,14 @@
     z-index: 1;
 
     &[data-sub-menu="allPrograms"] {
-        left: 75%;
+        left: 7%;
         bottom: 0.5rem;
-        width: 21rem;
+        width: 16.5rem;
+
+        @media (min-width: 600px) {
+            left: 75%;
+            width: 21rem;
+        }
     }
 
     &[data-sub-menu="recentDocuments"] {
@@ -40,14 +45,22 @@
     .StartMenuSubMenu {
         display: none;
         align-items: center;
-        width: 18rem;
+        width: 12.5rem;
+
+        @media (min-width: 600px) {
+            width: 18rem;
+        }
 
         &>div {
             width: 100%;
         }
 
         .StartMenuSubMenu {
-            width: 14rem;
+            width: 13rem;
+
+            @media (min-width: 600px) {
+                width: 14rem;
+            }
         }
     }
 
