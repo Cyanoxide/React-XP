@@ -40,15 +40,17 @@ const emptySubMenu = <div className={`${styles.emptySubMenu} flex items-center`}
 const StartMenuSubMenu: React.FC<StartMenuSubMenuProps> = ({ data }) => {
     const { id, featured, contents } = { ...data };
 
+    const hasFeatured = featured && featured.length > 0;
+    const hasContents = contents && contents?.length > 0;
     const isEmpty = !featured && (!contents || contents?.length === 0);
 
     return (
         <div className={`${styles.StartMenuSubMenu} items-center font-normal`} data-sub-menu={id}>
-            {featured && <div className={styles.featured}>
+            {hasFeatured && <div className={styles.featured}>
                 {featured.map((item) => template(item))}
             </div>}
-            {featured && contents && <hr />}
-            {contents && <div className={styles.contents}>
+            {hasFeatured && hasContents && <hr />}
+            {hasContents && <div className={styles.contents}>
                 {contents && contents.map((item) => template(item))}
             </div>}
             {isEmpty && emptySubMenu}

@@ -86,17 +86,18 @@
         "contents": [
             {
                 "id": "test",
-                "title": "Test Sub Menu Item",
+                "title": "Placeholder Item",
                 "icon": "/icon__default_programs--large.png",
-                "content": "<div></div>"
+                "content": "<div></div>",
+                "subMenu": "placeholder1"
             }
         ]
     },
     "placeholder1": {
         "contents": [
             {
-                "id": "test",
-                "title": "Test Sub Menu Item",
+                "id": "placeholder1",
+                "title": "Placeholder Item 2",
                 "icon": "/icon__default_programs--large.png",
                 "content": "<div></div>",
                 "subMenu": "placeholder2"
@@ -104,13 +105,6 @@
         ]
     },
     "placeholder2": {
-        "contents": [
-            {
-                "id": "test",
-                "title": "Test Sub Menu Item",
-                "icon": "/icon__default_programs--large.png",
-                "content": "<div></div>"
-            }
-        ]
+        "contents": []
     }
 }
