@@ -31,6 +31,7 @@ export interface Application {
     icon?: string;
     iconLarge?: string;
     content: ReactNode | string;
+    link?: string;
 }
 
 export interface State {

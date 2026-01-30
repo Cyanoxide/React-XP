@@ -21,7 +21,7 @@ const DesktopIcon: React.FC<DesktopIconProps> = ({ appId, top = undefined, right
     const desktopIcon = useRef<HTMLDivElement | null>(null);
     const isActive = id === selectedId;
     const appData = applications[appId];
-    const { title, icon, iconLarge } = { ...appData };
+    const { title, icon, iconLarge, link } = { ...appData };
 
     const onPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
         const desktopIconRect = desktopIcon.current?.getBoundingClientRect();
@@ -64,6 +64,8 @@ const DesktopIcon: React.FC<DesktopIconProps> = ({ appId, top = undefined, right
     }
 
     const onDoubleClickHandler = () => {
+        if (link) return window.open(link, "_blank", "noopener,noreferrer");
+
         openApplication(appId, currentWindows, dispatch);
         setSelectedId("");
     }
@@ -71,7 +73,7 @@ const DesktopIcon: React.FC<DesktopIconProps> = ({ appId, top = undefined, right
     const imageMask = (isActive) ? `url("${iconLarge || icon}")` : "";
 
     return (
-        <div ref={desktopIcon} className={styles.desktopIcon} data-selected={isActive} onClick={onClickHandler} onPointerDown={onPointerDown} onDoubleClick={onDoubleClickHandler} style={{ top: position.top, right: position.right, bottom: position.bottom, left: position.left }}>
+        <div ref={desktopIcon} className={styles.desktopIcon} data-selected={isActive} data-link={!!link} onClick={onClickHandler} onPointerDown={onPointerDown} onDoubleClick={onDoubleClickHandler} style={{ top: position.top, right: position.right, bottom: position.bottom, left: position.left }}>
             <span style={{ maskImage: imageMask }}><img src={iconLarge || icon} width="50" height="50" draggable={false} /></span>
             <h4 className="text-center">{title}</h4>
         </div>
